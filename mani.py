@@ -104,7 +104,7 @@ DEFAULT_SETTINGS = {
     'external_like_api_url': 'https://l9bi7e-likes-100.onrender.com/like?uid={uid}&server_name=ME',
     'external_like_api_key': '',
     'external_like_api_timeout': 120,
-    'bot_description': '<tg-emoji emoji-id=\"6113652711951963203\">🔥</tg-emoji> S1X x LIKE BOT <tg-emoji emoji-id=\"6115989917190330036\">🔥</tg-emoji>\n\n<tg-emoji emoji-id=\"6113765721131456191\">🎮</tg-emoji> بوت لايكات فري فاير مع Auto-Like يومي\n\n<tg-emoji emoji-id=\"6116444878781027101\">❤</tg-emoji> /like UID\n<tg-emoji emoji-id=\"6113761116926513509\">🤖</tg-emoji> Auto-Like مع مدة انتهاء\n\nDEV BY : @CB_2H',
+    'bot_description': '<tg-emoji emoji-id=\"6113652711951963203\">🔥</tg-emoji> RA7 x LIKE BOT <tg-emoji emoji-id=\"6115989917190330036\">🔥</tg-emoji>\n\n<tg-emoji emoji-id=\"6113765721131456191\">🎮</tg-emoji> بوت لايكات فري فاير مع Auto-Like يومي\n\n<tg-emoji emoji-id=\"6116444878781027101\">❤</tg-emoji> /like UID\n<tg-emoji emoji-id=\"6113761116926513509\">🤖</tg-emoji> Auto-Like مع مدة انتهاء\n\nDEV BY : @CB_2H',
     'like_command': '/like',
     'broadcast_message': '',
     'max_accounts': 15,
