@@ -248,7 +248,7 @@ def get_release_version():
         fetch_remote_config()
     if remote_config and 'latest_release_version' in remote_config:
         return remote_config['latest_release_version']
-    return 'OB54'
+    return 'OB55'
 
 def decode_jwt_payload(token):
     try:
@@ -1089,7 +1089,7 @@ def majorLogin(pyl, server=None):
     for attempt in range(3):
         try:
             conn = http.client.HTTPSConnection(server, context=ctx, timeout=timeout)
-            conn.request('POST', '/MajorLogin', body=pyl, headers={'X-Unity-Version': '2022.3.47f1', 'ReleaseVersion': 'OB54', 'Content-Type': 'application/x-www-form-urlencoded', 'X-GA': 'v1 1', 'Content-Length': str(len(pyl)), 'User-Agent': 'UnityPlayer/2022.3.47f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)', 'Host': server, 'Connection': 'Keep-Alive', 'Accept-Encoding': 'deflate, gzip'})
+            conn.request('POST', '/MajorLogin', body=pyl, headers={'X-Unity-Version': '2022.3.47f1', 'ReleaseVersion': 'OB55', 'Content-Type': 'application/x-www-form-urlencoded', 'X-GA': 'v1 1', 'Content-Length': str(len(pyl)), 'User-Agent': 'UnityPlayer/2022.3.47f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)', 'Host': server, 'Connection': 'Keep-Alive', 'Accept-Encoding': 'deflate, gzip'})
             resp = conn.getresponse()
             raw = resp.read()
             if resp.getheader('Content-Encoding') == 'gzip':
@@ -1111,7 +1111,7 @@ def getPorts(tok, pyl):
         for attempt in range(3):
             try:
                 host = server_url.split('/')[2]
-                r = requests.post(server_url, headers={'Expect': '100-continue', 'Authorization': f'Bearer {tok}', 'X-Unity-Version': '2022.3.47f1', 'X-GA': 'v1 1', 'ReleaseVersion': 'OB54', 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'UnityPlayer/2022.3.47f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)', 'Host': host, 'Connection': 'close', 'Accept-Encoding': 'deflate, gzip'}, data=pyl, verify=False, timeout=30)
+                r = requests.post(server_url, headers={'Expect': '100-continue', 'Authorization': f'Bearer {tok}', 'X-Unity-Version': '2022.3.47f1', 'X-GA': 'v1 1', 'ReleaseVersion': 'OB55', 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'UnityPlayer/2022.3.47f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)', 'Host': host, 'Connection': 'close', 'Accept-Encoding': 'deflate, gzip'}, data=pyl, verify=False, timeout=30)
                 d = json.loads(decodePacket(r.content.hex()))
                 a1, a2 = (d['32']['data'], d['14']['data'])
                 log.info(f'[+] getPorts successful via {host}')
