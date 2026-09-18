@@ -44,12 +44,14 @@ def _clean_button_emoji(text):
         text = re.sub(r'</tg-emoji>', '', text, flags=re.IGNORECASE)
     return text
 
-def _InlineKeyboardButton_clean(text=None, *args, **kwargs):
-    return _OriginalInlineKeyboardButton(
-        _clean_button_emoji(text), *args, **kwargs
-    )
+# Keep InlineKeyboardButton as a CLASS (not a function).
+# pyTelegramBotAPI uses class methods such as de_json when processing updates.
+# A function replacement breaks that API and causes: 'function' object has no attribute 'de_json'.
+class _CleanInlineKeyboardButton(_OriginalInlineKeyboardButton):
+    def __init__(self, text=None, *args, **kwargs):
+        super().__init__(_clean_button_emoji(text), *args, **kwargs)
 
-types.InlineKeyboardButton = _InlineKeyboardButton_clean
+types.InlineKeyboardButton = _CleanInlineKeyboardButton
 
 warnings.simplefilter('ignore', InsecureRequestWarning)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
