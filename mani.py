@@ -6,6 +6,7 @@ import time
 import gzip
 import base64
 import random
+import re
 import socket
 import logging
 import asyncio
@@ -31,6 +32,25 @@ from google.protobuf.timestamp_pb2 import Timestamp
 from protobuf_decoder.protobuf_decoder import Parser
 import telebot
 from telebot import types
+
+# Telegram inline-keyboard buttons do not support <tg-emoji> HTML tags.
+# Clean custom-emoji tags ONLY from button labels, while keeping the
+# underlying emoji character (🌐❌🤖... etc.). Message texts elsewhere
+# are left unchanged so their custom emojis continue to work.
+_OriginalInlineKeyboardButton = types.InlineKeyboardButton
+def _clean_button_emoji(text):
+    if isinstance(text, str):
+        text = re.sub(r'<tg-emoji\b[^>]*>', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'</tg-emoji>', '', text, flags=re.IGNORECASE)
+    return text
+
+def _InlineKeyboardButton_clean(text=None, *args, **kwargs):
+    return _OriginalInlineKeyboardButton(
+        _clean_button_emoji(text), *args, **kwargs
+    )
+
+types.InlineKeyboardButton = _InlineKeyboardButton_clean
+
 warnings.simplefilter('ignore', InsecureRequestWarning)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
