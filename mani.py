@@ -123,7 +123,7 @@ VIDEO_URLS = ['https://files.manuscdn.com/user_upload_by_module/session_file/310
 DEFAULT_SETTINGS = {
     'maintenance_mode': False,
     'use_external_like_api': False,
-    'external_like_api_url': 'https://l9bi7e-likes-100.onrender.com/like?uid={uid}&server_name=ME',
+    'external_like_api_url': 'https://ff.garena.cloud/like?uid={uid}&server=ME&key=FREE-FIRE-LIKE-API',
     'external_like_api_key': '',
     'external_like_api_timeout': 120,
     'bot_description': '<tg-emoji emoji-id=\"6113652711951963203\">🔥</tg-emoji> RA7 x LIKE BOT <tg-emoji emoji-id=\"6115989917190330036\">🔥</tg-emoji>\n\n<tg-emoji emoji-id=\"6113765721131456191\">🎮</tg-emoji> بوت لايكات فري فاير مع Auto-Like يومي\n\n<tg-emoji emoji-id=\"6116444878781027101\">❤</tg-emoji> /like UID\n<tg-emoji emoji-id=\"6113761116926513509\">🤖</tg-emoji> Auto-Like مع مدة انتهاء\n\nDEV BY : @CB_2H',
@@ -209,9 +209,27 @@ def update_setting(key, value):
     save_settings()
     log.info(f'[SETTINGS] Updated {key} = {value}')
 
+def migrate_external_like_api_setting():
+    try:
+        if not os.path.exists(SETTINGS_FILE):
+            return
+        with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        old_api = 'https://l9bi7e-likes-100.onrender.com/like?uid={uid}&server_name=ME'
+        new_api = 'https://ff.garena.cloud/like?uid={uid}&server=ME&key=FREE-FIRE-LIKE-API'
+        if data.get('external_like_api_url') == old_api:
+            data['external_like_api_url'] = new_api
+            with open(SETTINGS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            log.info('[MIGRATION] External Like API URL updated')
+    except Exception as e:
+        log.warning(f'[MIGRATION] External Like API update skipped: {e}')
+
 def get_settings():
     with _settings_lock:
         return _settings.copy()
+
+migrate_external_like_api_setting()
 
 def fetch_remote_config():
     global remote_config, remote_config_last_fetch
